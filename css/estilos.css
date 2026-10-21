@@ -1,0 +1,896 @@
+/*
+ * Estilos propios de Consulta Comercial Malambo.
+ * Aquí viven las variables de color (único lugar) y los componentes comunes;
+ * Tailwind por CDN solo aporta utilidades de espaciado y disposición.
+ */
+
+:root {
+  --color-primario: #0A4D52;
+  --color-acento: #0B8573;
+  --color-menta: #EAF6F3;
+  --color-coral: #F2644F;
+  --color-ambar: #F2B84B;
+  --color-texto: #12302F;
+  --color-fondo: #FFFFFF;
+  --color-borde: #CFE3DF;
+  --color-verde-claro: #D6F0E9;
+  --color-ambar-claro: #FCEFCF;
+  --color-coral-claro: #FDE3DE;
+
+  --color-primario-medio: #0C6A66;
+
+  /* Google Fonts (Plus Jakarta Sans e Inter); si no cargan, se usa la tipografía del sistema. */
+  --fuente-titulos: "Plus Jakarta Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --fuente-cuerpo: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  --radio-tarjeta: 20px;
+  --sombra-suave: 0 1px 2px rgba(10, 77, 82, 0.06), 0 8px 24px rgba(10, 77, 82, 0.07);
+  --sombra-elevada: 0 2px 4px rgba(10, 77, 82, 0.08), 0 14px 32px rgba(10, 77, 82, 0.14);
+  --alto-tactil: 44px;
+  --alto-navegacion: 64px;
+  --ancho-maximo: 72rem;
+  --transicion: 200ms ease;
+}
+
+.app {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(60rem 30rem at 100% -10%, rgba(11, 133, 115, 0.12), transparent 60%),
+    var(--color-menta);
+  color: var(--color-texto);
+  font-family: var(--fuente-cuerpo);
+  font-size: 1rem;
+  line-height: 1.55;
+  /* Deja espacio para la barra de navegación flotante en móvil. */
+  padding-bottom: calc(var(--alto-navegacion) + 2rem);
+}
+
+/* Foco visible para navegación con teclado en cualquier elemento interactivo. */
+.app :focus-visible {
+  outline: 3px solid var(--color-primario);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.app h1:focus,
+.contenido:focus {
+  outline: none;
+}
+
+/* Aviso permanente de datos de ejemplo */
+.aviso {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  padding: 0.375rem 1rem;
+  background: var(--color-ambar);
+  color: var(--color-texto);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Cabecera y navegación */
+.cabecera {
+  background: linear-gradient(135deg, var(--color-primario), var(--color-primario-medio));
+  color: #FFFFFF;
+}
+
+.cabecera-interior {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--ancho-maximo);
+  margin: 0 auto;
+  padding: 0.75rem 1rem;
+}
+
+.marca {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--alto-tactil);
+  color: #FFFFFF;
+  font-family: var(--fuente-titulos);
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+  .marca {
+    font-size: 1.375rem;
+  }
+}
+
+.app .cabecera :focus-visible,
+.app .navegacion :focus-visible {
+  outline-color: #FFFFFF;
+}
+
+/* En móvil la navegación es una barra flotante inferior, cómoda para el pulgar. */
+.navegacion {
+  position: fixed;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  left: 0.75rem;
+  z-index: 20;
+  display: flex;
+  height: var(--alto-navegacion);
+  padding: 0.375rem;
+  box-sizing: border-box;
+  background: var(--color-primario);
+  border-radius: 24px;
+  box-shadow: var(--sombra-elevada);
+}
+
+.navegacion-enlace {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.125rem;
+  min-height: var(--alto-tactil);
+  color: #FFFFFF;
+  font-size: 0.8125rem;
+  text-decoration: none;
+  border-radius: 18px;
+  transition: background-color var(--transicion);
+}
+
+.navegacion-enlace svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.navegacion-enlace:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* El estado activo no depende solo del color: lleva subrayado y negrita. */
+.navegacion-enlace[aria-current="page"] {
+  background: var(--color-acento);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+@media (min-width: 768px) {
+  .app {
+    padding-bottom: 0;
+  }
+
+  .navegacion {
+    position: static;
+    height: auto;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    gap: 0.5rem;
+  }
+
+  .navegacion-enlace {
+    flex: none;
+    flex-direction: row;
+    gap: 0.5rem;
+    padding: 0 1rem;
+    border-radius: 999px;
+    font-size: 1rem;
+  }
+}
+
+/* Contenido principal */
+.contenido {
+  max-width: var(--ancho-maximo);
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+}
+
+.titulo-pagina {
+  margin: 0 0 0.5rem;
+  color: var(--color-primario);
+  font-family: var(--fuente-titulos);
+  font-size: 1.875rem;
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+}
+
+.subtitulo {
+  margin: 0 0 1.25rem;
+  color: var(--color-texto);
+}
+
+@media (min-width: 768px) {
+  .titulo-pagina {
+    font-size: 2.25rem;
+  }
+}
+
+/* Tarjetas y listas */
+.tarjeta {
+  padding: 1.125rem;
+  background: var(--color-fondo);
+  border: 1px solid rgba(207, 227, 223, 0.7);
+  border-radius: var(--radio-tarjeta);
+  box-shadow: var(--sombra-suave);
+}
+
+.lista-tarjetas {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 640px) {
+  .lista-tarjetas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .lista-tarjetas {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.tarjeta-enlace {
+  display: block;
+  min-height: var(--alto-tactil);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color var(--transicion), transform var(--transicion);
+}
+
+.tarjeta-enlace:hover {
+  border-color: var(--color-acento);
+  box-shadow: var(--sombra-elevada);
+  transform: translateY(-2px);
+}
+
+.tarjeta-titulo {
+  margin: 0;
+  color: var(--color-primario);
+  font-family: var(--fuente-titulos);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.tarjeta-detalle {
+  margin: 0.25rem 0 0;
+  font-size: 0.9375rem;
+}
+
+/* Botones y enlaces de acción */
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--alto-tactil);
+  padding: 0 1.25rem;
+  background: var(--color-primario);
+  color: #FFFFFF;
+  border: 2px solid var(--color-primario);
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--transicion), color var(--transicion), transform var(--transicion), box-shadow var(--transicion);
+}
+
+.boton:hover {
+  background: var(--color-acento);
+  border-color: var(--color-acento);
+  box-shadow: 0 6px 16px rgba(11, 133, 115, 0.3);
+  transform: translateY(-1px);
+}
+
+.boton-secundario {
+  background: transparent;
+  color: var(--color-primario);
+}
+
+.boton-secundario:hover {
+  background: var(--color-primario);
+  border-color: var(--color-primario);
+  color: #FFFFFF;
+}
+
+/* Estados de pantalla (vacío, error) */
+.estado {
+  padding: 1rem;
+  background: var(--color-fondo);
+  border: 1px dashed var(--color-borde);
+  border-radius: var(--radio-tarjeta);
+}
+
+.estado-error {
+  border: 2px solid var(--color-coral);
+  font-weight: 700;
+}
+
+/* Pie de página */
+.pie {
+  max-width: var(--ancho-maximo);
+  margin: 0 auto;
+  padding: 1rem 1rem 2rem;
+  font-size: 0.875rem;
+}
+
+.pie p {
+  margin: 0 0 0.75rem;
+}
+
+/* Respeta a quienes piden menos movimiento en su sistema. */
+@media (prefers-reduced-motion: reduce) {
+  .app *,
+  .app *::before,
+  .app *::after {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Texto solo para lectores de pantalla; se muestra al recibir foco (enlace de salto). */
+.solo-lectores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.solo-lectores:focus {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 50;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0 1rem;
+  overflow: visible;
+  clip: auto;
+}
+
+/* Formularios: buscador y filtros */
+.formulario-busqueda {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.campo {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--alto-tactil);
+  padding: 0 0.875rem;
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  border: 2px solid var(--color-borde);
+  border-radius: 12px;
+  font: inherit;
+  transition: border-color var(--transicion);
+}
+
+.campo:hover,
+.campo:focus {
+  border-color: var(--color-acento);
+}
+
+.campo-busqueda {
+  font-size: 1.125rem;
+}
+
+.rotulo {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.panel-filtros {
+  display: grid;
+  gap: 0.75rem;
+  align-items: end;
+}
+
+@media (min-width: 640px) {
+  .panel-filtros {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.interruptor {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: var(--alto-tactil);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.interruptor input {
+  width: 1.25rem;
+  height: 1.25rem;
+  accent-color: var(--color-primario);
+}
+
+/* Chips de categoría */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chip {
+  min-height: var(--alto-tactil);
+  padding: 0 1rem;
+  background: var(--color-fondo);
+  color: var(--color-primario);
+  border: 2px solid var(--color-primario);
+  border-radius: 999px;
+  font: inherit;
+  cursor: pointer;
+  transition: background-color var(--transicion), color var(--transicion);
+}
+
+.chip:hover {
+  background: var(--color-menta);
+}
+
+/* El chip activo cambia de relleno y lleva una marca, no solo de color. */
+.chip[aria-pressed="true"] {
+  background: var(--color-primario);
+  color: #FFFFFF;
+  font-weight: 700;
+}
+
+.chip[aria-pressed="true"]::before {
+  content: "✓ ";
+}
+
+/* Resultados */
+.contador {
+  margin: 1rem 0 0.5rem;
+  font-weight: 700;
+}
+
+.fila-precio {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.precio {
+  margin: 0;
+  color: var(--color-primario);
+  font-family: var(--fuente-titulos);
+  font-size: 1.25rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.fila-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.texto-suave {
+  font-size: 0.875rem;
+  opacity: 0.85;
+}
+
+.enlace {
+  color: var(--color-primario);
+  font-weight: 700;
+  text-underline-offset: 3px;
+}
+
+.insignia {
+  display: inline-block;
+  padding: 0.125rem 0.625rem;
+  border: 2px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.insignia-abierto {
+  background: var(--color-menta);
+  color: var(--color-primario);
+}
+
+.insignia-cerrado {
+  background: var(--color-fondo);
+  color: var(--color-texto);
+}
+
+/* Esqueleto de carga */
+.esqueleto {
+  min-height: 7rem;
+  background: linear-gradient(90deg, var(--color-fondo) 0%, var(--color-menta) 50%, var(--color-fondo) 100%);
+  background-size: 200% 100%;
+  animation: brillo 1.2s linear infinite;
+}
+
+@keyframes brillo {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+
+/* Ficha del comercio */
+.rejilla-ficha {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 768px) {
+  .rejilla-ficha {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.subtitulo-seccion {
+  margin: 0 0 0.5rem;
+  color: var(--color-primario);
+  font-family: var(--fuente-titulos);
+  font-size: 1.25rem;
+}
+
+.boton-ancho {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width: 640px) {
+  .boton-ancho {
+    width: auto;
+  }
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.lista-horario,
+.lista-productos,
+.etiquetas {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fila-horario,
+.fila-producto {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.375rem 0;
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.fila-horario:last-child,
+.fila-producto:last-child {
+  border-bottom: 0;
+}
+
+/* El día de hoy se marca con negrita y fondo, no solo con color. */
+.fila-hoy {
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+  background: var(--color-menta);
+  border-radius: 8px;
+  font-weight: 700;
+}
+
+.etiquetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.etiqueta {
+  padding: 0.375rem 0.875rem;
+  background: var(--color-menta);
+  border: 1px solid var(--color-borde);
+  border-radius: 999px;
+}
+
+/* Mapas */
+.mapa {
+  width: 100%;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-tarjeta);
+}
+
+.mapa-ficha {
+  height: 16rem;
+}
+
+.mapa-general {
+  height: 60vh;
+  min-height: 20rem;
+}
+
+.globo-titulo {
+  color: var(--color-primario);
+}
+
+.globo-detalle {
+  margin: 0.25rem 0;
+}
+
+/* En móvil los chips van en una sola fila deslizable para no ocupar media pantalla. */
+@media (max-width: 639px) {
+  .chips {
+    flex-wrap: nowrap;
+    padding-bottom: 0.25rem;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+
+  .chip {
+    flex: none;
+  }
+}
+
+/* Panel del comercio */
+.formulario-panel {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 32rem;
+  margin-bottom: 1rem;
+}
+
+.barra-panel {
+  margin: 0 0 1rem;
+}
+
+.mensaje-error {
+  margin: 0;
+  color: var(--color-texto);
+  font-weight: 700;
+}
+
+/* El mensaje de error solo ocupa espacio cuando tiene texto. */
+.mensaje-error:not(:empty) {
+  padding: 0.5rem 0.75rem;
+  background: var(--color-coral-claro);
+  border-left: 4px solid var(--color-coral);
+  border-radius: 8px;
+}
+
+.campo[aria-invalid="true"] {
+  border-color: var(--color-coral);
+}
+
+.boton-peligro {
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  border-color: var(--color-coral);
+}
+
+.boton-peligro:hover {
+  background: var(--color-coral);
+  border-color: var(--color-coral);
+  color: var(--color-texto);
+}
+
+/* Avisos breves (toasts), por encima de la barra de navegación inferior. */
+.zona-avisos {
+  position: fixed;
+  right: 1rem;
+  bottom: calc(var(--alto-navegacion) + 1.5rem);
+  left: 1rem;
+  z-index: 40;
+  display: grid;
+  gap: 0.5rem;
+  justify-items: center;
+  pointer-events: none;
+}
+
+.aviso-flotante {
+  margin: 0;
+  padding: 0.75rem 1.25rem;
+  background: var(--color-primario);
+  color: #FFFFFF;
+  border-radius: 999px;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(18, 48, 47, 0.3);
+  animation: entrada-aviso var(--transicion);
+}
+
+@keyframes entrada-aviso {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (min-width: 768px) {
+  .zona-avisos {
+    bottom: 1.5rem;
+  }
+}
+
+/* Disponibilidad: color + símbolo + texto (nunca solo color) */
+.insignia-disponible {
+  background: var(--color-verde-claro);
+  color: var(--color-texto);
+  border-color: var(--color-acento);
+}
+
+.insignia-pocas-unidades {
+  background: var(--color-ambar-claro);
+  color: var(--color-texto);
+  border-color: var(--color-ambar);
+}
+
+.insignia-agotado {
+  background: var(--color-coral-claro);
+  color: var(--color-texto);
+  border-color: var(--color-coral);
+}
+
+/* Portada del inicio: título y buscador sobre fondo degradado */
+.hero {
+  position: relative;
+  margin-bottom: 1rem;
+  padding: 1.5rem 1.25rem;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--color-primario), var(--color-primario-medio) 70%, var(--color-acento));
+  border-radius: 28px;
+  box-shadow: var(--sombra-elevada);
+}
+
+/* Círculo decorativo; no aporta contenido, por eso va en un pseudoelemento. */
+.hero::after {
+  content: "";
+  position: absolute;
+  top: -4rem;
+  right: -4rem;
+  width: 12rem;
+  height: 12rem;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hero .titulo-pagina,
+.hero .subtitulo {
+  position: relative;
+  color: #FFFFFF;
+}
+
+.hero .subtitulo {
+  margin-bottom: 1rem;
+  opacity: 0.92;
+}
+
+.formulario-hero {
+  position: relative;
+  z-index: 1;
+}
+
+.hero .campo-busqueda {
+  min-height: 3.5rem;
+  padding-left: 3rem;
+  border-color: transparent;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230A4D52' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E");
+  background-position: 1rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5rem;
+  border-radius: 999px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+}
+
+.hero .campo-busqueda:focus {
+  border-color: var(--color-ambar);
+}
+
+@media (min-width: 768px) {
+  .hero {
+    padding: 2.5rem 2rem;
+  }
+}
+
+/* Diálogo de confirmación */
+.dialogo {
+  width: min(24rem, calc(100vw - 2rem));
+  padding: 1.5rem;
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  border: 0;
+  border-radius: 24px;
+  box-shadow: var(--sombra-elevada);
+  text-align: center;
+}
+
+.dialogo[open] {
+  animation: entrada-dialogo var(--transicion);
+}
+
+.dialogo::backdrop {
+  background: rgba(18, 48, 47, 0.55);
+  backdrop-filter: blur(3px);
+}
+
+@keyframes entrada-dialogo {
+  from { opacity: 0; transform: translateY(12px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.dialogo-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin: 0 auto 0.75rem;
+  background: var(--color-verde-claro);
+  border-radius: 50%;
+  color: var(--color-primario);
+  font-family: var(--fuente-titulos);
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.dialogo-icono-peligro {
+  background: var(--color-coral-claro);
+  color: var(--color-texto);
+}
+
+.dialogo-titulo {
+  margin: 0 0 0.5rem;
+  color: var(--color-primario);
+  font-family: var(--fuente-titulos);
+  font-size: 1.375rem;
+  font-weight: 700;
+}
+
+.dialogo-mensaje {
+  margin: 0 0 1.25rem;
+}
+
+.dialogo-acciones {
+  justify-content: center;
+}
+
+/* Botón de confirmación de acciones destructivas: coral con texto oscuro para mantener el contraste. */
+.boton-alerta {
+  background: var(--color-coral);
+  border-color: var(--color-coral);
+  color: var(--color-texto);
+}
+
+.boton-alerta:hover {
+  background: var(--color-texto);
+  border-color: var(--color-texto);
+  color: #FFFFFF;
+  box-shadow: none;
+}
